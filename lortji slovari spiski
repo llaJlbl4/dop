@@ -1,0 +1,14 @@
+s = {"Семён": 234, "Катя": 4565, "игорь228": 5453}
+
+secret = "Очень важный секрет"
+
+login = input("Введите логиин: ")
+password = int(input("Введите пароль: "))
+
+try:
+    if s[login] == password:
+        print(f"{login}, вы открыли {secret}")
+    else:
+        print("Не правильный пароль")
+except KeyError:
+    pass
