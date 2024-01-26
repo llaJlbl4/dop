@@ -1,5 +1,5 @@
 import pygame
-from threading import Thread
+import random
 
 
 pygame.init()
@@ -42,7 +42,7 @@ def Perc():
     global keys
     global storona
     screen.blit(jpg, (0, 0))
-    text = font.render("Welcome to game!!", True, (0, 0, 100))
+    text = font.render(str(score), True, (0, 0, 100))
     screen.blit(text, (x, y))
     screen.blit(perconak, (x3, y3))
     screen.blit(new_size2, (x5, y5))
@@ -84,6 +84,10 @@ new_bullet = pygame. transform.scale(bullet, size2)
 zvuk = pygame.mixer.Sound("shagi.mp3")
 perconak = new_size
 storona = "left"
+flag = False
+score = 0
+
+
 
 
 x,y = 140, 40
@@ -91,6 +95,8 @@ x1,y1 = 140, 80
 x2,y2 = 140, 120
 x3, y3 = 100, 200
 x5, y5 = 500, 200
+x4 = 802
+
 
 try:
     while True:
@@ -100,14 +106,46 @@ try:
                 quit()
         Perc()
 
-        if keys[pygame.K_SPACE]:
-            thread1 = Thread(target=Bullet)
-            thread2 = Thread(target=Perc)
+        if keys[pygame.K_UP]:
+            y5 -= 0.5
+            zvuk.play()
 
-            thread1.start()
-            thread2.start()
-            thread1.join()
-            thread2.join()
+        if keys[pygame.K_DOWN]:
+            zvuk.play()
+            y5 += 0.5
+
+        if keys[pygame.K_RIGHT]:
+            x5 += 0.5
+            zvuk.play()
+            storona = "right"
+            perconak = new_rot_size
+
+        if keys[pygame.K_LEFT]:
+            x5 -= 0.5
+            zvuk.play()
+            storona = "left"
+            perconak = new_size
+
+        if keys[pygame.K_SPACE] and x4 >= 800 or keys[pygame.K_SPACE] and x4 <= -150:
+                x4 = x3
+                y4 = y3 + 17
+                flag = True
+                storona1 = storona
+        if flag == True and storona1 == "left":
+            screen.blit(new_bullet, (x4, y4))
+            x4 -= 2
+        if flag == True and storona1 == "right":
+            screen.blit(new_bullet, (x4+50, y4))
+            x4 += 2
+        if x4 <= -150 or x4 >= 800:
+            flag = False
+        if x5+60 > x4 > x5 and y5+50 > y4 > y5 or x5+60 > x4 > x5 and y5+50 > y4+10 > y5 > y4 or x5+60 > x4 > x5 and y4+10 >y5+50 > y4 > y5:
+            x5 = random.randint(0, 740)
+            y5 = random.randint(0, 750)
+            score += 1
+
+
+
 
 
 
@@ -152,14 +190,21 @@ except NameError:
             zvuk.play()
         if keys[pygame.K_SPACE]:
             x4 = x3
-            for i in range(800):
-                screen.blit(jpg, (0, 0))
-                screen.blit(new_size, (x3, y3))
-                text = font.render("Welcome to game!!", True, (0, 0, 100))
-                screen.blit(text, (x, y))
-                screen.blit(new_bullet, (x4, y3 + 17))
-                x4 -= 1
-                pygame.display.update()
+            # for i in range(800):
+            #     screen.blit(jpg, (0, 0))
+            #     screen.blit(new_size, (x3, y3))
+            #     text = font.render("Welcome to game!!", True, (0, 0, 100))
+            #     screen.blit(text, (x, y))
+            #     screen.blit(new_bullet, (x4, y3 + 17))
+            #     x4 -= 1
+            #     pygame.display.update()
+            flag = True
+        if flag == True:
+            screen.blit(new_bullet, (x4, y3 + 17))
+            x4 += 2
+        if x4 >= 800:
+            flag == False
+
 
 
 
