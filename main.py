@@ -1,24 +1,17 @@
 import cv2
-#
-# img = cv2.imread("cv2_g1_g2/Enot.jpg")
-# img = cv2.resize(img, (img.shape[1]//2, img.shape[0]//2))
-# cv2.imshow("Enot", img)
-#
-# cv2.waitKey(31873)
-# import cv2
-#
-# img = cv2.imread("../cv_2/cv2_g1_g2/cv2_g1_g2/sq.jpg")
-# img = cv2.resize(img, (img.shape[1]//4, img.shape[0]//4))
-# cv2.imshow("Enot", img[127:290, 70:228])
-#
-# cv2.waitKey(500)
+import numpy as np
 
-img = cv2.imread("cv2_g1_g2/cv2_g1_g2/face.Jpg")
-img = cv2.resize(img, (img.shape[1]//1, img.shape[0]//1))
-# img = cv2.GaussianBlur(img, (25, 25), 0)
-img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-img = cv2.Canny(img, 100, 100)
 
-cv2.imshow("tb", img)
+img = np.zeros((500, 500, 3), dtype='uint8')
 
-cv2.waitKey(1000)
+# img [100:150, 200:280] = 0, 0, 255
+# img [450:500, 450:500] = 0, 255, 0
+cv2.rectangle(img, (250, 200), (300, 250), (255, 100, 50), thickness=1)
+cv2.rectangle(img, (200, 180), (270, 225), (0, 0, 255), thickness=cv2.FILLED)
+cv2.rectangle(img, (260, 230), (400, 190), (0, 255, 0), thickness=2)
+cv2.line(img, (250, 200), (400, 190), (255, 0, 0), thickness=1)
+cv2.circle(img, (280, 212), 150, (0, 0, 255), thickness=1)
+cv2.putText(img, "My text", (100, 200), cv2.FONT_HERSHEY_TRIPLEX, 1, (255, 0, 0), 2)
+
+cv2.imshow("IMG", img)
+cv2.waitKey(0)
