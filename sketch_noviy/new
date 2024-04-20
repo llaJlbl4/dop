@@ -1,0 +1,61 @@
+char a;
+
+void setup() {
+  pinMode(13, OUTPUT);
+  pinMode(12, OUTPUT);
+  pinMode(11, OUTPUT);
+  Serial.begin(9600);
+
+}
+
+void loop() {
+  a = Serial.read();
+  if (a == '1'){
+  digitalWrite(12, 0);
+  digitalWrite(11, 0);
+  digitalWrite(13, 1);
+  Serial.println("ON");
+  }
+  
+  if (a == '2'){
+  digitalWrite(12, 1);
+  digitalWrite(11, 0);
+  digitalWrite(13, 0);
+  Serial.println("ON");
+  }
+
+  if (a == '3'){
+  digitalWrite(12, 0);
+  digitalWrite(11, 1);
+  digitalWrite(13, 0);
+  Serial.println("ON");
+  }
+
+  if (a == '0'){
+  digitalWrite(12, 0);
+  digitalWrite(11, 0);
+  digitalWrite(13, 0);
+  Serial.println("ON");
+  }
+
+  if (a == '4'){
+  digitalWrite(12, 1);
+  digitalWrite(11, 0);
+  digitalWrite(13, 1);
+  Serial.println("ON");
+  }
+
+  if (a == '5'){
+  digitalWrite(12, 1);
+  digitalWrite(11, 1);
+  digitalWrite(13, 1);
+  Serial.println("ON");
+  }
+
+  if (a == '6'){
+  digitalWrite(12, 0);
+  digitalWrite(11, 1);
+  digitalWrite(13, 1);
+  Serial.println("ON");
+  }
+}
