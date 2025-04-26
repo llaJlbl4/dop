@@ -1,0 +1,47 @@
+import cv2 
+
+
+tracker = cv2.TrackerCSRT.create()
+cam = cv2.VideoCapture(0)
+ret, frame = cam.read()
+bbox = cv2.selectROI("object", frame, fromCenter=False, showCrosshair=True)
+print(bbox)
+tracker.init(frame, bbox)
+
+while True:
+    ret, frame = cam.read()
+    ok, bbox = tracker.update(frame)
+
+    if ok:
+        x = bbox[0]
+        y = bbox[1]
+        b = bbox[2]
+        d = bbox[3]
+        z = int((x+(x+b-x)/2)/640*100)
+        c = int((y+(y+d-y)/2)/480*100)
+        if z < 40:
+            print("Правее")
+        elif z > 60:
+            print("Левее")
+        else:
+            pass
+        if c < 40:
+            print("Ниже")
+        elif c > 60:
+            print("Выше")
+        else:
+            pass
+        print(z, c)
+        
+        cv2.rectangle(frame, (x, y), (x+b, y+d), (0, 0, 255), thickness=1)
+    else:
+        cv2.putText(frame, 'Ошибка отслеживания', (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0,0,255), 2)
+    cv2.imshow("да", frame)
+    
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cam.release()
+cv2.destroyAllWindows()
+
+
